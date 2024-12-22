@@ -1,0 +1,36 @@
+# Node modules
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+
+# Build and cache files
+/dist/
+build/
+.cache/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# NPM and Yarn lock files (optional, you can keep them if needed)
+package-lock.json
+yarn.lock
+
+# Coverage directory (if using a test framework like Jest)
+coverage/
+
+# Temporary files
+*.swp
+*~
+
+# TypeScript compilation
+*.tsbuildinfo
