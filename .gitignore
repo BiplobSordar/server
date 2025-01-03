@@ -12,6 +12,7 @@ logs/
 /dist/
 build/
 .cache/
+uploads/
 
 # OS-specific files
 .DS_Store

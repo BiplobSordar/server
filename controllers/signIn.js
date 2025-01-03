@@ -2,7 +2,7 @@ import { validationResult } from "express-validator"
 
 
 import bcrypt from "bcryptjs";
-// import {sql} from "../db/sql.js";
+
 import postgres from 'postgres'
 import { generateToken } from "../utils/generateToken.js";
 import { distroyFile, uploadFile } from "../utils/cloudinary.js";
@@ -37,25 +37,8 @@ export const register = async (req, res) => {
 
 
 
-    // Create User Table If Not Exists
 
-    const createUserTable = async () => {
-
-
-        const result = await sql`CREATE TABLE IF NOT EXISTS USERS (
-            id SERIAL PRIMARY KEY,
-            userName VARCHAR(50) NOT NULL,
-            email VARCHAR(100) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            role VARCHAR(20) CHECK (role IN ('instructor', 'student')) DEFAULT 'student',
-            photo_url VARCHAR(255) ,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   
-            );`
-
-    }
-
+ 
 
     // Inser Data Query for Inserting User Data To The User Table 
 
@@ -63,7 +46,7 @@ export const register = async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        await createUserTable()
+        
 
 
 
@@ -301,4 +284,17 @@ export const updateUser = async (req, res) => {
 
 
 
+}
+
+export const updateRole=async(req,res)=>{
+    const sql = postgres(`${process.env.DATABASE_URL}`);
+    try {
+        const id=req.id
+         await sql`UPDATE users SET role=${'instructor'} WHERE users.id=${id}`
+          return res.status(200).json({message:'Congratulation Now You are a Instructor'})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({message:'Internal Server Error'})
+        
+    }
 }
